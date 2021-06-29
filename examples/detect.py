@@ -21,7 +21,10 @@ def detect(filename, cascade_file = "../lbpcascade_animeface.xml"):
 
     cv2.imshow("AnimeFaceDetect", image)
     cv2.waitKey(0)
-    cv2.imwrite("out.png", image)
+    numb = open('../count.txt').read()
+    name = "out" + numb + ".png"
+    cv2.imwrite("outs/" + name, image)
+    open('../count.txt', 'w').write(str(int(numb) + 1))
 
 if len(sys.argv) != 2:
     sys.stderr.write("usage: detect.py <filename>\n")
