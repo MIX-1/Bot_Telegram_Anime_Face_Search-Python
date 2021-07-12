@@ -13,11 +13,23 @@ def detect(filename, cascade_file = "../lbpcascade_animeface.xml"):
     
     faces = cascade.detectMultiScale(gray,
                                      # detector options
-                                     scaleFactor = 1.1,
+                                     scaleFactor = 1.05,
                                      minNeighbors = 5,
-                                     minSize = (24, 24))
+                                     minSize = (5, 5))
+    count = 0
+    faces_out = []
     for (x, y, w, h) in faces:
+        count += 1
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        cv2.putText(image, str(count), (x + w, y + h), cv2.FONT_ITALIC, 1, (0, 0, 0), 3)
+        cropped = image[y:y+h, x:x+w]
+        faces_out.append(cropped)
+
+    # count1 = 0
+    # for face in faces2:
+    #     count1 += 1
+    #     name = "out" + str(count1) + ".png"
+    #     cv2.imwrite("faces/" + name, face)
 
     cv2.imshow("AnimeFaceDetect", image)
     cv2.waitKey(0)
